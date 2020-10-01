@@ -13,7 +13,6 @@ public class Board {
 			System.out.println("------------------------------------------");
 		}
 	}
-
 	//initialize the board with default pieces
 	protected Board() {
 		

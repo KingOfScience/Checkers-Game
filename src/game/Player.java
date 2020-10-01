@@ -1,5 +1,7 @@
 package game;
 
+import static game.checkerColour.BLACKKING;
+
 import java.util.Scanner;
 
 public class Player {
@@ -39,7 +41,8 @@ public class Player {
 		
 		//Check if they are even moving a pawn
 		&&		(board.gameBoard[startingY][startingX]!=checkerColour.NONE)
-		) {return false;}//Don't let the player move if they dont fit the conditions
+		) 
+		{return false;}//Don't let the player move if they dont fit the conditions
 		
 		else {
 			//Check to see if the pawn destination is full odd or evem
@@ -151,8 +154,8 @@ public class Player {
 	
 	//Checks if a pawn should be destroyed, returns true if it has
 	protected final void capturePiece(final byte endingY,final byte endingX,final byte startingX,final byte startingY, Board board){
-
-		if((board.gameBoard[endingY][endingX] == checkerColour.RED)) {//if its red
+		//If its red
+		if((board.gameBoard[endingY][endingX] == checkerColour.RED)) {
 			if((endingX!=7)) {
 				if((endingY-startingY==2)) {//make sure its capturable
 					if((board.gameBoard[endingY-1][endingX-1] == checkerColour.BLACK)||(board.gameBoard[endingY-1][endingX-1] == checkerColour.BLACKKING)) {
@@ -164,7 +167,7 @@ public class Player {
 				}
 			}
 		}
-		//ditto
+		//If its black
 		else if((board.gameBoard[endingY][endingX] == checkerColour.BLACK)&&(endingX!=0)) {//If its black
 			if(startingY-endingY==2) {//Make sure its capturable
 				if((board.gameBoard[endingY+1][endingX-1] == checkerColour.RED)||(board.gameBoard[endingY+1][endingX-1] == checkerColour.REDKING)) {
@@ -173,6 +176,23 @@ public class Player {
 				else if((board.gameBoard[endingY+1][endingX+1] == checkerColour.RED)||(board.gameBoard[endingY+1][endingX+1] == checkerColour.REDKING)) {
 					board.gameBoard[endingY+1][endingX+1] = checkerColour.NONE;
 				}
+			}
+		}
+		//if its a red king
+		else if((board.gameBoard[endingY][endingX]==checkerColour.REDKING)||(board.gameBoard[endingY][endingX]==BLACKKING)){
+
+			//If they are going right
+			if(endingX-startingX>0){
+				board.gameBoard[endingY-1][endingX-1]=checkerColour.NONE;
+			}
+
+			//If they are going left
+			else if(endingX-startingX<0){
+				board.gameBoard[endingY-1][endingX+1]=checkerColour.NONE;
+			}
+			//There was an error if this happened
+			else{
+				System.out.println("LOGIC ERROR");
 			}
 		}
 	}
